@@ -85,7 +85,7 @@ We welcome contributions to enhance the functionality, fix issues, or add new fe
     `git checkout -b feature/your-feature-name`
 4.  Make the necessary changes, commit them, and push to your forked repository:  
     `git add .   git commit -m "Your detailed description of the changes."   git push origin feature/your-feature-name`
-5.  Open a pull request on the original repository, comparing your branch with the `main` branch.
+5.  Open a pull request on the original repository, comparing your branch with the `dev` branch.
 
 License
 -------
