@@ -26,6 +26,29 @@ class _VideoPlayerItemsState extends State<VideoPlayerItems> with WidgetsBinding
     initializeController();
   }
 
+   initializeController() async{
+    await widget.videoPlayerController.initialize();
+    _chewieController = ChewieController(
+      videoPlayerController: widget.videoPlayerController,
+      autoInitialize: true,
+      aspectRatio: widget.videoPlayerController.value.aspectRatio,
+      autoPlay: widget.autoplay,
+      looping: widget.looping,
+      errorBuilder: (context, errorMessage) {
+        return Center(
+          child: Text(
+            'Something Went Wrong',
+            style: TextStyle(color: Colors.white,),
+            textAlign: TextAlign.center,
+          ),
+        );
+      },
+    );
+    setState(() {
+      loaded=true;
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -50,26 +73,5 @@ class _VideoPlayerItemsState extends State<VideoPlayerItems> with WidgetsBinding
     );
   }
 
-  initializeController() async{
-    await widget.videoPlayerController.initialize();
-    _chewieController = ChewieController(
-      videoPlayerController: widget.videoPlayerController,
-      autoInitialize: true,
-      aspectRatio: widget.videoPlayerController.value.aspectRatio,
-      autoPlay: widget.autoplay,
-      looping: widget.looping,
-      errorBuilder: (context, errorMessage) {
-        return Center(
-          child: Text(
-            'Something Went Wrong',
-            style: TextStyle(color: Colors.white,),
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
-    );
-    setState(() {
-      loaded=true;
-    });
-  }
+ 
 }

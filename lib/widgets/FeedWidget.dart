@@ -82,9 +82,10 @@ class _FeedWidgetState extends State<FeedWidget> {
       setState(() {});
     });
 
-    FlutterDownloader.registerCallback((id, status, progress) {
-      downloadCallback(id, status, progress);
-    });
+    FlutterDownloader.registerCallback(downloadCallback);
+
+    // FlutterDownloader.registerCallback(
+    //     (id, status, progress) => downloadCallback(id, status, progress));
   }
 
   void dispose() {

@@ -137,6 +137,11 @@ class _EmailVerificationState extends State<EmailVerification> {
                   width: MediaQuery.of(context).size.width,
                   textFieldAlignment: MainAxisAlignment.center,
                   fieldStyle: FieldStyle.box,
+                  onChanged: (pin){
+                    setState(() {
+                      
+                    });
+                  },
                   onCompleted: (pin) {
                     print("Completed: " + pin);
                     otpVerification(pin);

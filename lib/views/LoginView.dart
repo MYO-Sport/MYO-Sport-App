@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
 import 'package:us_rowing/models/UserModel.dart';
 import 'package:us_rowing/network/ApiClient.dart';
@@ -20,7 +19,7 @@ import 'package:us_rowing/widgets/PrimaryButton.dart';
 import 'package:http/http.dart' as http;
 
 import 'AthleteView/HomeView.dart';
-import 'EmailVerification.dart';
+// import 'EmailVerification.dart';
 
 class LoginView extends StatefulWidget {
   final String type;
@@ -88,7 +87,11 @@ class _LoginViewState extends State<LoginView> {
                     SizedBox(
                       height: 60.0,
                     ),
-                    Text('Login as '+widget.type,textAlign: TextAlign.center,style: TextStyle(color: colorBlack,fontSize: 16),),
+                    Text(
+                      'Login as ' + widget.type,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: colorBlack, fontSize: 16),
+                    ),
                     SizedBox(
                       height: 40.0,
                     ),
@@ -175,7 +178,9 @@ class _LoginViewState extends State<LoginView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ForgotPasswordView(type: widget.type,)),
+                                builder: (context) => ForgotPasswordView(
+                                      type: widget.type,
+                                    )),
                           );
                         },
                       ),
@@ -187,7 +192,7 @@ class _LoginViewState extends State<LoginView> {
                       text: 'LOGIN',
                       onPressed: () {
                         hideKeyboard(context);
-                        if(validate()){
+                        if (validate()) {
                           logIn();
                         }
                       },
@@ -229,14 +234,14 @@ class _LoginViewState extends State<LoginView> {
         ),
         isLoading
             ? Container(
-          height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-          color: Colors.black38,
-          child: Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(colorBlue),
-              )),
-        )
+                height: MediaQuery.of(context).size.height,
+                width: double.infinity,
+                color: Colors.black38,
+                child: Center(
+                    child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(colorBlue),
+                )),
+              )
             : Container()
       ],
     );
@@ -246,32 +251,31 @@ class _LoginViewState extends State<LoginView> {
     String email = userEmailController.text.trim();
     String password = passwordController.text;
     if (email.isEmpty) {
-      MySnackBar.showSnackBar(context,"Email is Required");
+      MySnackBar.showSnackBar(context, "Email is Required");
       return false;
     }
     if (!validEmail(email)) {
-      MySnackBar.showSnackBar(context,"Correct Email is Required");
+      MySnackBar.showSnackBar(context, "Correct Email is Required");
       return false;
     }
     if (password.isEmpty) {
-      MySnackBar.showSnackBar(context,"Password is Required");
+      MySnackBar.showSnackBar(context, "Password is Required");
       return false;
     }
 
     int status;
-    if(widget.type==typeAthlete){
-      status=0;
-    }else{
-      status=1;
+    if (widget.type == typeAthlete) {
+      status = 0;
+    } else {
+      status = 1;
     }
 
-    loginBody=LoginBody(status: status);
+    loginBody = LoginBody(status: status);
     loginBody.email = email.toLowerCase();
     print(email.toLowerCase());
     loginBody.password = password;
     return true;
   }
-
 
   logIn() async {
     setState(() {
@@ -281,62 +285,64 @@ class _LoginViewState extends State<LoginView> {
 
     await http
         .post(Uri.parse(apiUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(loginBody)).then((response){
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode(loginBody))
+        .then((response) {
       if (response.statusCode == 200) {
         final String responseString = response.body;
         print(response.body);
         UserResponse mResponse =
-        UserResponse.fromJson(json.decode(responseString));
+            UserResponse.fromJson(json.decode(responseString));
         if (mResponse.status) {
-          if(mResponse.verified){
-            UserModel user = mResponse.response;
-            saveUser(user).then((value){
-              if(user.type==typeAthlete){
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => HomeView(userModel: user,),
+          // if(mResponse.verified){
+          UserModel user = mResponse.response;
+          saveUser(user).then((value) {
+            if (user.type == typeAthlete) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => HomeView(
+                      userModel: user,
                     ),
-                        (route) => false);
-              }else{
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => CoachHomeView(userModel: user,),
+                  ),
+                  (route) => false);
+            } else {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => CoachHomeView(
+                      userModel: user,
                     ),
-                        (route) => false);
-              }
-            });
-          }
+                  ),
+                  (route) => false);
+            }
+          });
+          /*  }
           else{
             setState(() {
               isLoading=false;
             });
             showToast('Please Verify Your Account');
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmailVerification( email: loginBody.email)));
-          }
-
+          } */
         } else {
           setState(() {
             isLoading = false;
           });
-          MySnackBar.showSnackBar(context,mResponse.message);
+          MySnackBar.showSnackBar(context, mResponse.message);
         }
       } else {
         setState(() {
-          isLoading=false;
+          isLoading = false;
         });
         print(response.body);
-        MySnackBar.showSnackBar(context,'Check Your Internet Connection');
+        MySnackBar.showSnackBar(context, 'Check Your Internet Connection');
       }
-    })
-        .catchError((value) {
+    }).catchError((value) {
       setState(() {
         isLoading = false;
       });
-      MySnackBar.showSnackBar(context,'Check Your Internet Connection');
+      MySnackBar.showSnackBar(context, 'Check Your Internet Connection');
     });
-
   }
 }

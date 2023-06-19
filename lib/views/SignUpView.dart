@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:us_rowing/models/UserModel.dart';
 import 'package:us_rowing/network/ApiClient.dart';
 import 'package:us_rowing/network/body/SignUpBody.dart';
 import 'package:us_rowing/network/response/GeneralStatusResponse.dart';
@@ -7,7 +8,8 @@ import 'package:us_rowing/utils/AppAssets.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/utils/AppUtils.dart';
 import 'package:us_rowing/utils/MySnackBar.dart';
-import 'package:us_rowing/views/EmailVerification.dart';
+import 'package:us_rowing/views/CompleteProfileView.dart';
+// import 'package:us_rowing/views/EmailVerification.dart';
 import 'package:us_rowing/views/LoginView.dart';
 import 'package:us_rowing/widgets/InputFields.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -45,7 +47,9 @@ class _SignUpViewState extends State<SignUpView> {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(100),
             child: ClipRRect(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20)),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.2,
@@ -91,7 +95,11 @@ class _SignUpViewState extends State<SignUpView> {
                     SizedBox(
                       height: 30.0,
                     ),
-                    Text('Sign Up as '+widget.type,textAlign: TextAlign.center,style: TextStyle(color: colorBlack,fontSize: 16),),
+                    Text(
+                      'Sign Up as ' + widget.type,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: colorBlack, fontSize: 16),
+                    ),
                     SizedBox(
                       height: 20.0,
                     ),
@@ -191,7 +199,6 @@ class _SignUpViewState extends State<SignUpView> {
                         controller: stateNameController,
                       ),
                     ),
-
                     SizedBox(
                       height: 30.0,
                     ),
@@ -267,7 +274,9 @@ class _SignUpViewState extends State<SignUpView> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginView(type: widget.type,)),
+                                    builder: (context) => LoginView(
+                                          type: widget.type,
+                                        )),
                               );
                             },
                           ),
@@ -283,7 +292,9 @@ class _SignUpViewState extends State<SignUpView> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginView(type: widget.type,)),
+                                    builder: (context) => LoginView(
+                                          type: widget.type,
+                                        )),
                               );
                             },
                           ),
@@ -298,14 +309,14 @@ class _SignUpViewState extends State<SignUpView> {
         ),
         isLoading
             ? Container(
-          height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-          color: Colors.black38,
-          child: Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(colorBlue),
-              )),
-        )
+                height: MediaQuery.of(context).size.height,
+                width: double.infinity,
+                color: Colors.black38,
+                child: Center(
+                    child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(colorBlue),
+                )),
+              )
             : Container()
       ],
     );
@@ -321,7 +332,7 @@ class _SignUpViewState extends State<SignUpView> {
     String type = widget.type;
     String city = cityNameController.text;
     String state = stateNameController.text;
-    String memberNumber=memberShipController.text;
+    String memberNumber = memberShipController.text;
     if (userName.isEmpty) {
       MySnackBar.showSnackBar(context, "User Name is Required");
       return false;
@@ -350,12 +361,12 @@ class _SignUpViewState extends State<SignUpView> {
       MySnackBar.showSnackBar(context, "State name is Required");
       return false;
     }
-    if(!status){
+    if (!status) {
       MySnackBar.showSnackBar(context, "Accept the Terms and Conditions.");
       return false;
     }
     signUpBody.username = userName;
-    signUpBody.memberNumber=memberNumber;
+    signUpBody.memberNumber = memberNumber;
     signUpBody.type = type;
     signUpBody.contactNum = contact;
     signUpBody.role = role;
@@ -412,31 +423,37 @@ class _SignUpViewState extends State<SignUpView> {
     String apiUrl = ApiClient.urlSignUp;
 
     setState(() {
-      isLoading=true;
+      isLoading = true;
     });
 
     final response = await http
         .post(Uri.parse(apiUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(signUpBody))
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode(signUpBody))
         .catchError((value) {
       setState(() {
         isLoading = false;
       });
-      MySnackBar.showSnackBar(context, 'Error: ' + 'Check Your Internet Connection.');
+      MySnackBar.showSnackBar(
+          context, 'Error: ' + 'Check Your Internet Connection.');
       return value;
-
     });
     if (response.statusCode == 200) {
       final String responseString = response.body;
       print(responseString);
       GeneralStatusResponse mResponse =
-      GeneralStatusResponse.fromJson(json.decode(responseString));
+          GeneralStatusResponse.fromJson(json.decode(responseString));
       if (mResponse.status) {
+        // UserModel model = UserModel(address: signUpBody., club: club, team: team)
         setState(() {
-          isLoading=false;
+          isLoading = false;
         });
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmailVerification( email: signUpBody.email)));
+        UserModel model = UserModel.abc(username: signUpBody.username, email: signUpBody.email);
+
+ /*        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => EmailVerification(email: signUpBody.email)));  */
+            Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CompleteProfileView(user: model, update: false,)));
       } else {
         setState(() {
           isLoading = false;
@@ -445,9 +462,10 @@ class _SignUpViewState extends State<SignUpView> {
       }
     } else {
       setState(() {
-        isLoading=false;
+        isLoading = false;
       });
-      MySnackBar.showSnackBar(context,  'Error: ' + 'Check Your Internet Connection');
+      MySnackBar.showSnackBar(
+          context, 'Error: ' + 'Check Your Internet Connection');
     }
   }
 }

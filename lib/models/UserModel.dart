@@ -26,55 +26,60 @@ class UserModel {
   late String starboard;
   late String sculling;
 
+  UserModel.abc({
+    this.username = '',
+    this.email = '',
+
+  });
+
   UserModel(
       {required this.address,
-        this.role='',
-        this.sId='',
-        this.username='',
-        this.email='',
-        this.contactNum='',
-        this.type='',
-        this.password='',
-        this.createdAt='',
-        this.updatedAt='',
-        this.iV=0,
-        required this.club,
-        required this.team,
-        this.profileImage='',
-        this.age=0,
-        this.weight=0,
-        this.starboard='',
-        this.sculling='',
-        this.dob='',
-        this.height=0,
-        this.port='',
-        this.memberNumber=''
-      });
+      this.role = '',
+      this.sId = '',
+      this.username = '',
+      this.email = '',
+      this.contactNum = '',
+      this.type = '',
+      this.password = '',
+      this.createdAt = '',
+      this.updatedAt = '',
+      this.iV = 0,
+      required this.club,
+      required this.team,
+      this.profileImage = '',
+      this.age = 0,
+      this.weight = 0,
+      this.starboard = '',
+      this.sculling = '',
+      this.dob = '',
+      this.height = 0,
+      this.port = '',
+      this.memberNumber = ''});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     address = (json['address'] != null
         ? new AddressModel.fromJson(json['address'])
         : AddressModel());
-    role = json['role']??'';
-    sId = json['_id']??'';
-    username = json['username']??'';
-    memberNumber = json['membership_number']??'';
-    email = json['email']??'';
-    contactNum = json['contact_num']??'';
-    type = json['type']??'';
-    password = json['password']??'';
-    createdAt = json['createdAt']??'';
-    updatedAt = json['updatedAt']??'';
-    profileImage = json['profile_image']??'';
-    age = json['age']??0;
-    weight = json['weight']??0;
-    starboard = json['starboard']??'';
-    sculling = json['sculling']??'';
-    dob = json['dob']??'';
-    height = json['height']??0;
-    port = json['port']??'';
+    role = json['role'] ?? '';
+    sId = json['_id'] ?? '';
+    username = json['username'] ?? '';
+    memberNumber = json['membership_number'] ?? '';
+    email = json['email'] ?? '';
+    contactNum = json['contact_num'] ?? '';
+    type = json['type'] ?? '';
+    password = json['password'] ?? '';
+    createdAt = json['createdAt'] ?? '';
+    updatedAt = json['updatedAt'] ?? '';
+    profileImage = json['profile_image'] ?? '';
+    age = json['age'] ?? 0;
+    weight = json['weight'] ?? 0;
+    starboard = json['starboard'] ?? '';
+    sculling = json['sculling'] ?? '';
+    dob = json['dob'] ?? '';
+    height = json['height'] ?? 0;
+    port = json['port'] ?? '';
 
-    iV = json['__v']??0;
+    iV = json['__v'] ?? 0;
     if (json['club'] != null) {
       club = <ClubIdModel>[];
       json['club'].forEach((v) {

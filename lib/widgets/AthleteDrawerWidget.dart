@@ -120,7 +120,7 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                     push(context, MaterialPageRoute(builder: (context) => NotificationView()));
                   },
                 ),
-                DrawerWidget(
+              /*   DrawerWidget(
                   icon: imgNavSponsors,
                   name: 'Sponsors',
                   onTap: () {
@@ -128,7 +128,7 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                     Navigator.
                     push(context, MaterialPageRoute(builder: (context) => SponsorsView()));
                   },
-                ),
+                ), */
                 DrawerWidget(
                   icon: imgNavStore,
                   name: 'Store',
@@ -137,14 +137,14 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                     push(context, MaterialPageRoute(builder: (context) => SponsorsView()));
                   },
                 ),
-                DrawerWidget(
+                /* DrawerWidget(
                   icon: imgNavChallenges,
                   name: 'Challenges',
                   onTap: () {
                     
 
                   },
-                ),
+                ), */
                 DrawerWidget(
                   icon: imgNavEquipment,
                   name: 'Equipment Reservations',
