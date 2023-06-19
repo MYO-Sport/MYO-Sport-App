@@ -1,4 +1,4 @@
-Project Name
+MYO-Sport
 ============
 
 This repository contains the Flutter-based project "Project Name." It is a mobile application that _\[briefly describe the purpose or main features of the app\]_.
