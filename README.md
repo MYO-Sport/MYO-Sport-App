@@ -1,7 +1,7 @@
 MYO-Sport
 ============
 
-This repository contains the Flutter-based project "MYO-Sport" MYOSPORT is an application which allows sporting organizations to organize their clubs & teams right from a phone.
+This repository contains the Flutter-based project "MYO-Sport", an application which allows sporting organizations to organize their clubs & teams right from a phone.
 
 Installation
 ------------
