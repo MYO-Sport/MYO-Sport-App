@@ -1,16 +1,3 @@
-# us_rowing
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# MYO Sport App
+**To Run App:** To run App on mobile devices use the following command in terminal -> **flutter run** <- this command will generate a build/apk and install it in the mobile device.  
+**To Build Apk:** To build apk/build use the following command -> **flutter build apk** -> this command will generate the apk that you will install in mobile device manually but this build/apk size is large. If you want to generate a concise build then use this command ->  **flutter build apk --split-per-abi** <- this will generate a concise apk.
