@@ -57,6 +57,7 @@ flutter\_typeahead: ^4.6.1
 flutter\_tags: 1.0.0-nullsafety.1
 syncfusion\_flutter\_charts: ^21.2.9
 file\_picker: ^5.3.2
+flutter\_version: 3.10.4
 
 Usage
 -----
