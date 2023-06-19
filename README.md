@@ -1,16 +1,16 @@
 MYO-Sport
 ============
 
-This repository contains the Flutter-based project "Project Name." It is a mobile application that _\[briefly describe the purpose or main features of the app\]_.
+This repository contains the Flutter-based project "MYO-Sport." It is a mobile application that _\[briefly describe the purpose or main features of the app\]_.
 
 Installation
 ------------
 
 1.  Make sure you have Flutter installed. If not, refer to the [Flutter installation guide](https://flutter.dev/docs/get-started/install) to set up Flutter on your system.
 2.  Clone this repository to your local machine using the following command:  
-    `git clone https://github.com/your-username/project-name.git`
+    `git clone git@github.com:MYO-Sport/MYO-Sport-App.git`
 3.  Change your current directory to the project's root directory:  
-    `cd project-name/`
+    `cd MYO-Sport/`
 4.  Install the project dependencies by running the following command:  
     `flutter pub get`
 
