@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:us_rowing/network/ApiClient.dart';
+import 'package:us_rowing/screens/slack_screen.dart';
 import 'package:us_rowing/utils/AppAssets.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/utils/AppUtils.dart';
@@ -134,7 +135,7 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                   name: 'Store',
                   onTap: () {
                     Navigator.
-                    push(context, MaterialPageRoute(builder: (context) => SponsorsView()));
+                    push(context, MaterialPageRoute(builder: (context) => SlackScreen()));
                   },
                 ),
                 DrawerWidget(

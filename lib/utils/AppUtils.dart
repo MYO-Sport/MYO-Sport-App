@@ -62,7 +62,7 @@ Future<void> saveUser(UserModel user) async{
   prefs.clear();
   prefs.setBool(kLogin, true);
   prefs.setString(kUserName, user.username);
-  prefs.setString(kUserMembership, user.memberNumber);
+  prefs.setString(kUserMembership, user.memberNumber!);
   prefs.setString(kEmail, user.email);
   prefs.setString(kUserId, user.sId);
   prefs.setString(kPhone, user.contactNum);

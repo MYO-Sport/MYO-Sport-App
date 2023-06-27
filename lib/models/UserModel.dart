@@ -7,7 +7,7 @@ class UserModel {
   late String role;
   late String sId;
   late String username;
-  late String memberNumber;
+  String? memberNumber;
   late String email;
   late String contactNum;
   late String type;

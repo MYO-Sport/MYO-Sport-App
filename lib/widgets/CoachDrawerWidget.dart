@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:us_rowing/network/ApiClient.dart';
+import 'package:us_rowing/screens/slack_screen.dart';
 import 'package:us_rowing/utils/AppAssets.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/utils/AppUtils.dart';
@@ -139,7 +140,9 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                                 userId: widget.userId)));
                   },
                 ),
-                DrawerWidget(
+
+                
+               /*  DrawerWidget(
                   icon: imgNavSponsors,
                   name: 'Sponsors',
                   onTap: () {
@@ -147,7 +150,7 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                     Navigator.
                     push(context, MaterialPageRoute(builder: (context) => SponsorsView()));
                   },
-                ),
+                ), */
                 DrawerWidget(
                   icon: imgNavStore,
                   name: 'Store',
@@ -156,12 +159,12 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                     push(context, MaterialPageRoute(builder: (context) => SponsorsView()));
                   },
                 ),
-                DrawerWidget(
+                /* DrawerWidget(
                   icon: imgNavChallenges,
                   name: 'Challenges',
                   onTap: () {
                   },
-                ),
+                ), */
                 DrawerWidget(
                   icon: imgNavEquipment,
                   name: 'Equipment Reservations',
@@ -188,6 +191,14 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                     // Navigator.pop(context);
                     Navigator.
                     push(context, MaterialPageRoute(builder: (context) => FeedbackView()));
+                  },
+                ),
+                 DrawerWidget(
+                  icon: imgNavStore,
+                  name: 'Slack',
+                  onTap: () {
+                    Navigator.
+                    push(context, MaterialPageRoute(builder: (context) => SlackScreen()));
                   },
                 ),
                 DrawerWidget(

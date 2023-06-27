@@ -60,7 +60,7 @@ class _CompleteProfileViewState extends State<CompleteProfileView> {
     super.initState();
     selectedDate = DateTime.now();
     userNameController.text = widget.user.username;
-    memberController.text = widget.user.memberNumber;
+    memberController.text = widget.user.memberNumber!;
     if (widget.update) {
       ageController.text =
           widget.user.age == 0 ? '' : widget.user.age.toString();
