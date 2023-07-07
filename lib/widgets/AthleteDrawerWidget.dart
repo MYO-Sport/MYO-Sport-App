@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:us_rowing/network/ApiClient.dart';
-import 'package:us_rowing/screens/slack_screen.dart';
+// import 'package:us_rowing/screens/slack_screen.dart';
 import 'package:us_rowing/utils/AppAssets.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/utils/AppUtils.dart';
@@ -10,7 +10,7 @@ import 'package:us_rowing/views/CoachView/LiveFeedDetails.dart';
 import 'package:us_rowing/views/CoachView/fragments/CoachChatViewFragment.dart';
 import 'package:us_rowing/views/FeedBackView.dart';
 import 'package:us_rowing/views/Reservation/ClubResView.dart';
-import 'package:us_rowing/views/SponsorsView.dart';
+// import 'package:us_rowing/views/SponsorsView.dart';
 import 'package:us_rowing/views/FAQView.dart';
 import 'package:us_rowing/widgets/CachedImage.dart';
 import 'package:us_rowing/widgets/DrawerWidget.dart';
@@ -121,7 +121,7 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                     push(context, MaterialPageRoute(builder: (context) => NotificationView()));
                   },
                 ),
-                DrawerWidget(
+               /*  DrawerWidget(
                   icon: imgNavSponsors,
                   name: 'Sponsors',
                   onTap: () {
@@ -145,7 +145,7 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                     
 
                   },
-                ),
+                ), */
                 DrawerWidget(
                   icon: imgNavEquipment,
                   name: 'Equipment Reservations',

@@ -11,7 +11,7 @@ import 'package:us_rowing/views/CoachView/LiveFeedDetails.dart';
 import 'package:us_rowing/views/CoachView/fragments/CoachChatViewFragment.dart';
 import 'package:us_rowing/views/FeedBackView.dart';
 import 'package:us_rowing/views/Reservation/ClubResView.dart';
-import 'package:us_rowing/views/SponsorsView.dart';
+// import 'package:us_rowing/views/SponsorsView.dart';
 import 'package:us_rowing/views/FAQView.dart';
 import 'package:us_rowing/widgets/DrawerColoredWidget.dart';
 import 'package:us_rowing/widgets/DrawerWidget.dart';
@@ -19,19 +19,15 @@ import 'package:us_rowing/widgets/DrawerWidget.dart';
 import 'CachedImage.dart';
 
 class CoachDrawerWidget extends StatefulWidget {
-
   final String userId;
 
   CoachDrawerWidget({required this.userId});
 
   @override
   _StateCoachDrawerWidget createState() => _StateCoachDrawerWidget();
-
-
 }
 
-class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
-
+class _StateCoachDrawerWidget extends State<CoachDrawerWidget> {
   String? userName;
   String? userImage;
   String? userEmail;
@@ -39,11 +35,11 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
   @override
   void initState() {
     super.initState();
-    getUser().then((value){
+    getUser().then((value) {
       setState(() {
-        userName=value.username;
-        userImage=value.profileImage;
-        userEmail=value.email;
+        userName = value.username;
+        userImage = value.profileImage;
+        userEmail = value.email;
       });
     });
   }
@@ -56,8 +52,10 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
         const end = Offset.zero;
         final tween = Tween(begin: begin, end: end);
         final offsetAnimation = animation.drive(tween);
-        return SlideTransition(position: offsetAnimation,
-          child: child, );
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
       },
       duration: const Duration(milliseconds: 800),
       child: Container(
@@ -73,34 +71,61 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  CachedImage(image:userName==null?'':ApiClient.baseUrl+userImage!,imageHeight: 60,imageWidth: 60,padding: 0,),
-                  SizedBox(width: 10,),
-                  Expanded(child: Column(
+                  CachedImage(
+                    image:
+                        userName == null ? '' : ApiClient.baseUrl + userImage!,
+                    imageHeight: 60,
+                    imageWidth: 60,
+                    padding: 0,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(userName==null?'':userName!,style: TextStyle(color: colorBlack,fontSize: 19),),
-                      SizedBox(height: 5,),
-                      Text(userEmail==null?'':userEmail!,style: TextStyle(color: colorTextSecondary,fontSize: 14),)
+                      Text(
+                        userName == null ? '' : userName!,
+                        style: TextStyle(color: colorBlack, fontSize: 19),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        userEmail == null ? '' : userEmail!,
+                        style:
+                            TextStyle(color: colorTextSecondary, fontSize: 14),
+                      )
                     ],
                   ))
                 ],
               ),
             ),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Divider(thickness: 2,height: 0,),
+              child: Divider(
+                thickness: 2,
+                height: 0,
+              ),
             ),
-            Expanded(child: ListView(
+            Expanded(
+                child: ListView(
               padding: EdgeInsets.zero,
               children: [
                 DrawerWidget(
-                  icon:imgNavProfile,
+                  icon: imgNavProfile,
                   name: 'Profile',
                   onTap: () {
                     // Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CoachProfileView()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CoachProfileView()));
                   },
                 ),
                 DrawerWidget(
@@ -108,7 +133,12 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                   name: 'Chat',
                   onTap: () {
                     // Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CoachChatViewFragment(workoutImage: '',)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CoachChatViewFragment(
+                                  workoutImage: '',
+                                )));
                   },
                 ),
                 DrawerWidget(
@@ -116,7 +146,10 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                   name: 'Live Feeds',
                   onTap: () {
                     // Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => LiveFeedDetails()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LiveFeedDetails()));
                   },
                 ),
                 DrawerWidget(
@@ -124,8 +157,10 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                   name: 'Notifications',
                   onTap: () {
                     // Navigator.pop(context);
-                    Navigator.
-                    push(context, MaterialPageRoute(builder: (context) => NotificationView()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotificationView()));
                   },
                 ),
                 DrawerColoredWidget(
@@ -141,8 +176,7 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                   },
                 ),
 
-                
-               /*  DrawerWidget(
+                /*  DrawerWidget(
                   icon: imgNavSponsors,
                   name: 'Sponsors',
                   onTap: () {
@@ -151,14 +185,14 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                     push(context, MaterialPageRoute(builder: (context) => SponsorsView()));
                   },
                 ), */
-                DrawerWidget(
+                /*  DrawerWidget(
                   icon: imgNavStore,
                   name: 'Store',
                   onTap: () {
                     Navigator.
                     push(context, MaterialPageRoute(builder: (context) => SponsorsView()));
                   },
-                ),
+                ), */
                 /* DrawerWidget(
                   icon: imgNavChallenges,
                   name: 'Challenges',
@@ -169,7 +203,10 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                   icon: imgNavEquipment,
                   name: 'Equipment Reservations',
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ClubResView(allClubs: false,)));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ClubResView(
+                              allClubs: false,
+                            )));
                     // Navigator.of(context).push(MaterialPageRoute(builder: (context) => EquipmentResView()));
                   },
                 ),
@@ -179,8 +216,8 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                   onTap: () {
                     // tod
                     // Navigator.pop(context);
-                    Navigator.
-                    push(context, MaterialPageRoute(builder: (context) => FAQView()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => FAQView()));
                   },
                 ),
                 DrawerWidget(
@@ -189,16 +226,18 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget>{
                   onTap: () {
                     // tod
                     // Navigator.pop(context);
-                    Navigator.
-                    push(context, MaterialPageRoute(builder: (context) => FeedbackView()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FeedbackView()));
                   },
                 ),
-                 DrawerWidget(
+                DrawerWidget(
                   icon: imgNavStore,
                   name: 'Slack',
                   onTap: () {
-                    Navigator.
-                    push(context, MaterialPageRoute(builder: (context) => SlackScreen()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SlackScreen()));
                   },
                 ),
                 DrawerWidget(

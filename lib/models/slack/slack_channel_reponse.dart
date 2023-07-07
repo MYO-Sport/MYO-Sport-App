@@ -1,25 +1,25 @@
 // To parse this JSON data, do
 //
-//     final slackChannelsModels = slackChannelsModelsFromJson(jsonString);
+//     final slackChannelsModel = slackChannelsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-SlackChannelsModels slackChannelsModelsFromJson(String str) => SlackChannelsModels.fromJson(json.decode(str));
+SlackChannelsModel slackChannelsModelFromJson(String str) => SlackChannelsModel.fromJson(json.decode(str));
 
-String slackChannelsModelsToJson(SlackChannelsModels data) => json.encode(data.toJson());
+String slackChannelsModelToJson(SlackChannelsModel data) => json.encode(data.toJson());
 
-class SlackChannelsModels {
+class SlackChannelsModel {
     bool ok;
     List<Channel> channels;
     ResponseMetadata responseMetadata;
 
-    SlackChannelsModels({
+    SlackChannelsModel({
         required this.ok,
         required this.channels,
         required this.responseMetadata,
     });
 
-    factory SlackChannelsModels.fromJson(Map<String, dynamic> json) => SlackChannelsModels(
+    factory SlackChannelsModel.fromJson(Map<String, dynamic> json) => SlackChannelsModel(
         ok: json["ok"],
         channels: List<Channel>.from(json["channels"].map((x) => Channel.fromJson(x))),
         responseMetadata: ResponseMetadata.fromJson(json["response_metadata"]),
@@ -38,25 +38,29 @@ class Channel {
     bool isChannel;
     bool isGroup;
     bool isIm;
+    bool isMpim;
+    bool isPrivate;
     int created;
-    String creator;
     bool isArchived;
     bool isGeneral;
     int unlinked;
     String nameNormalized;
     bool isShared;
-    bool isExtShared;
     bool isOrgShared;
-    List<dynamic> pendingShared;
     bool isPendingExtShared;
-    bool isMember;
-    bool isPrivate;
-    bool isMpim;
+    List<dynamic> pendingShared;
+    String contextTeamId;
     int updated;
+    dynamic parentConversation;
+    Creator creator;
+    bool isExtShared;
+    List<String> sharedTeamIds;
+    List<dynamic> pendingConnectedTeamIds;
+    bool isMember;
     Purpose topic;
     Purpose purpose;
-    List<dynamic> previousNames;
     int numMembers;
+    List<dynamic>? previousNames;
 
     Channel({
         required this.id,
@@ -64,25 +68,29 @@ class Channel {
         required this.isChannel,
         required this.isGroup,
         required this.isIm,
+        required this.isMpim,
+        required this.isPrivate,
         required this.created,
-        required this.creator,
         required this.isArchived,
         required this.isGeneral,
         required this.unlinked,
         required this.nameNormalized,
         required this.isShared,
-        required this.isExtShared,
         required this.isOrgShared,
-        required this.pendingShared,
         required this.isPendingExtShared,
-        required this.isMember,
-        required this.isPrivate,
-        required this.isMpim,
+        required this.pendingShared,
+        required this.contextTeamId,
         required this.updated,
+        this.parentConversation,
+        required this.creator,
+        required this.isExtShared,
+        required this.sharedTeamIds,
+        required this.pendingConnectedTeamIds,
+        required this.isMember,
         required this.topic,
         required this.purpose,
-        required this.previousNames,
         required this.numMembers,
+        this.previousNames,
     });
 
     factory Channel.fromJson(Map<String, dynamic> json) => Channel(
@@ -91,25 +99,29 @@ class Channel {
         isChannel: json["is_channel"],
         isGroup: json["is_group"],
         isIm: json["is_im"],
+        isMpim: json["is_mpim"],
+        isPrivate: json["is_private"],
         created: json["created"],
-        creator: json["creator"],
         isArchived: json["is_archived"],
         isGeneral: json["is_general"],
         unlinked: json["unlinked"],
         nameNormalized: json["name_normalized"],
         isShared: json["is_shared"],
-        isExtShared: json["is_ext_shared"],
         isOrgShared: json["is_org_shared"],
-        pendingShared: List<dynamic>.from(json["pending_shared"].map((x) => x)),
         isPendingExtShared: json["is_pending_ext_shared"],
-        isMember: json["is_member"],
-        isPrivate: json["is_private"],
-        isMpim: json["is_mpim"],
+        pendingShared: List<dynamic>.from(json["pending_shared"].map((x) => x)),
+        contextTeamId: json["context_team_id"],
         updated: json["updated"],
+        parentConversation: json["parent_conversation"],
+        creator: creatorValues.map[json["creator"]]!,
+        isExtShared: json["is_ext_shared"],
+        sharedTeamIds: List<String>.from(json["shared_team_ids"].map((x) => x)),
+        pendingConnectedTeamIds: List<dynamic>.from(json["pending_connected_team_ids"].map((x) => x)),
+        isMember: json["is_member"],
         topic: Purpose.fromJson(json["topic"]),
         purpose: Purpose.fromJson(json["purpose"]),
-        previousNames: List<dynamic>.from(json["previous_names"].map((x) => x)),
         numMembers: json["num_members"],
+        previousNames: json["previous_names"] == null ? [] : List<dynamic>.from(json["previous_names"]!.map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
@@ -118,31 +130,43 @@ class Channel {
         "is_channel": isChannel,
         "is_group": isGroup,
         "is_im": isIm,
+        "is_mpim": isMpim,
+        "is_private": isPrivate,
         "created": created,
-        "creator": creator,
         "is_archived": isArchived,
         "is_general": isGeneral,
         "unlinked": unlinked,
         "name_normalized": nameNormalized,
         "is_shared": isShared,
-        "is_ext_shared": isExtShared,
         "is_org_shared": isOrgShared,
-        "pending_shared": List<dynamic>.from(pendingShared.map((x) => x)),
         "is_pending_ext_shared": isPendingExtShared,
-        "is_member": isMember,
-        "is_private": isPrivate,
-        "is_mpim": isMpim,
+        "pending_shared": List<dynamic>.from(pendingShared.map((x) => x)),
+        "context_team_id": contextTeamId,
         "updated": updated,
+        "parent_conversation": parentConversation,
+        "creator": creatorValues.reverse[creator],
+        "is_ext_shared": isExtShared,
+        "shared_team_ids": List<dynamic>.from(sharedTeamIds.map((x) => x)),
+        "pending_connected_team_ids": List<dynamic>.from(pendingConnectedTeamIds.map((x) => x)),
+        "is_member": isMember,
         "topic": topic.toJson(),
         "purpose": purpose.toJson(),
-        "previous_names": List<dynamic>.from(previousNames.map((x) => x)),
         "num_members": numMembers,
+        "previous_names": previousNames == null ? [] : List<dynamic>.from(previousNames!.map((x) => x)),
     };
 }
 
+enum Creator { EMPTY, U05_DHK589_JM, U05_CYB9642_J }
+
+final creatorValues = EnumValues({
+    "": Creator.EMPTY,
+    "U05CYB9642J": Creator.U05_CYB9642_J,
+    "U05DHK589JM": Creator.U05_DHK589_JM
+});
+
 class Purpose {
     String value;
-    String creator;
+    Creator creator;
     int lastSet;
 
     Purpose({
@@ -153,13 +177,13 @@ class Purpose {
 
     factory Purpose.fromJson(Map<String, dynamic> json) => Purpose(
         value: json["value"],
-        creator: json["creator"],
+        creator: creatorValues.map[json["creator"]]!,
         lastSet: json["last_set"],
     );
 
     Map<String, dynamic> toJson() => {
         "value": value,
-        "creator": creator,
+        "creator": creatorValues.reverse[creator],
         "last_set": lastSet,
     };
 }
@@ -178,4 +202,16 @@ class ResponseMetadata {
     Map<String, dynamic> toJson() => {
         "next_cursor": nextCursor,
     };
+}
+
+class EnumValues<T> {
+    Map<String, T> map;
+    late Map<T, String> reverseMap;
+
+    EnumValues(this.map);
+
+    Map<T, String> get reverse {
+        reverseMap = map.map((k, v) => MapEntry(v, k));
+        return reverseMap;
+    }
 }

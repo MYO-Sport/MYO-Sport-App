@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:provider/provider.dart';
 import 'package:us_rowing/models/UserModel.dart';
+import 'package:us_rowing/providers/channel_notifier.dart';
+import 'package:us_rowing/providers/channels_video_notifier.dart';
 import 'package:us_rowing/providers/slack_notifier.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/utils/AppConstants.dart';
@@ -45,8 +47,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => SlackNotifier(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<SlackNotifier>(
+          create: (_) => SlackNotifier(),
+        ),
+        ChangeNotifierProvider<ChannelNotifier>(
+          create: (_) => ChannelNotifier(),
+        ),
+        ChangeNotifierProvider<ChannelsVideoNotifier>(
+          create: (_) => ChannelsVideoNotifier(),
+        ),
+      ],
       child: MaterialApp(
         title: 'MyoSport',
         debugShowCheckedModeBanner: false,
