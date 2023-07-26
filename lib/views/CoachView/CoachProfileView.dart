@@ -46,50 +46,50 @@ class _CoachProfileViewState extends State<CoachProfileView> {
     return Scaffold(
       backgroundColor: colorWhite,
       appBar: AppBar(
-              backgroundColor: colorWhite,
-              title: Text(
-                'User Profile',
-                style: TextStyle(color: colorBlack),
+        backgroundColor: colorWhite,
+        title: Text(
+          'User Profile',
+          style: TextStyle(color: colorBlack),
+        ),
+        centerTitle: true,
+        leading: InkWell(
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: colorPrimary,
+            size: 18,
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: InkWell(
+              child: Icon(
+                Icons.edit,
+                color: colorPrimary,
+                size: 18,
               ),
-              centerTitle: true,
-              leading: InkWell(
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: colorPrimary,
-                  size: 18,
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: InkWell(
-                    child: Icon(
-                      Icons.edit,
-                      color: colorPrimary,
-                      size: 18,
-                    ),
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(
-                              builder: (context) => CompleteProfileView(
-                                    user: user,
-                                    update: true,
-                                  )))
-                          .then((value) {
-                        if (value is UserModel) {
-                          setState(() {
-                            user = value;
-                          });
-                        }
-                      });
-                    },
-                  ),
-                ),
-              ],
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (context) => CompleteProfileView(
+                              user: user,
+                              update: true,
+                            )))
+                    .then((value) {
+                  if (value is UserModel) {
+                    setState(() {
+                      user = value;
+                    });
+                  }
+                });
+              },
             ),
+          ),
+        ],
+      ),
       body: loaded
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -291,9 +291,7 @@ class _CoachProfileViewState extends State<CoachProfileView> {
                             horizontal: 20.0, vertical: 10),
                         child: ProfileWidget(
                             heading: 'Membership Number',
-                            value: user.memberNumber.isEmpty
-                                ? '-'
-                                : user.memberNumber),
+                            value: user.memberNumber ?? '-'),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(

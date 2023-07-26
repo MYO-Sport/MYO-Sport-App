@@ -12,6 +12,12 @@ import GoogleMaps
     GMSServices.provideAPIKey("AIzaSyDGxzqsG4UuLCWAHMl05nMCSW9yFJaePOo")
     GeneratedPluginRegistrant.register(with: self)
     FlutterDownloaderPlugin.setPluginRegistrantCallback(registerPlugins)
+     if (@available(iOS 10.0, *)) {
+      [UNUserNotificationCenter currentNotificationCenter].delegate = (id<UNUserNotificationCenterDelegate>) self;
+}
+    if #available(iOS 10.0, *) {
+      UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+}
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

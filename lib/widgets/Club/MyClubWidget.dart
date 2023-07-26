@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:us_rowing/models/ClubModel.dart';
+import 'package:us_rowing/models/club/club_response.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/views/AthleteView/Club/MyClub/MyClubDetails.dart';
 import 'package:us_rowing/widgets/AddedMenuButton.dart';
 import 'package:us_rowing/widgets/CachedImage.dart';
 
+
+
 class MyClubWidget extends StatefulWidget {
   final String name;
   final String image;
   final String clubId;
-  final ClubModel clubModel;
+  final AllClub clubModel;
   final String userId;
 
   MyClubWidget({this.image='',this.name='',required this.clubId,required this.clubModel, required this.userId});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:us_rowing/models/ClubModel.dart';
+import 'package:us_rowing/models/club/club_response.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/views/Reservation/EquipmentResView.dart';
 import 'package:us_rowing/widgets/AddedMenuButton.dart';
@@ -9,10 +9,15 @@ class ClubResWidget extends StatefulWidget {
   final String clubName;
   final String image;
   final String clubId;
-  final ClubModel clubModel;
+  final AssignedClub clubModel;
   final String userId;
 
-  ClubResWidget({this.image='',required this.clubName,required this.clubId,required this.clubModel, required this.userId});
+  ClubResWidget(
+      {this.image = '',
+      required this.clubName,
+      required this.clubId,
+      required this.clubModel,
+      required this.userId});
 
   @override
   _ClubResWidgetState createState() => _ClubResWidgetState();
@@ -22,7 +27,7 @@ class _ClubResWidgetState extends State<ClubResWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:EdgeInsets.symmetric(horizontal: 22.0,vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 5),
       child: InkWell(
         child: Material(
           color: colorWhite,
@@ -40,30 +45,41 @@ class _ClubResWidgetState extends State<ClubResWidget> {
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: colorLightGrey,
-                          borderRadius: BorderRadius.circular(8.0)
-                      ),
-                      child: CachedImage(image: widget.image,radius: 0,fit: BoxFit.fill,padding: 0,
+                          borderRadius: BorderRadius.circular(8.0)),
+                      child: CachedImage(
+                        image: widget.image,
+                        radius: 0,
+                        fit: BoxFit.fill,
+                        padding: 0,
                       )),
-                  Expanded(child: Padding(
+                  Expanded(
+                      child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(widget.clubName,maxLines: 2,overflow: TextOverflow.fade,textAlign: TextAlign.start,),
+                    child: Text(
+                      widget.clubName,
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
+                      textAlign: TextAlign.start,
+                    ),
                   )),
-                  AddedMenuButton(text: 'Added', onPressed: (){
-                  })
+                  AddedMenuButton(text: 'Added', onPressed: () {})
                 ],
               ),
             ),
           ),
         ),
-        onTap: (){
+        onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => EquipmentResView(clubName: widget.clubName, clubId: widget.clubId,userId: widget.userId,)),
+                builder: (context) => EquipmentResView(
+                      clubName: widget.clubName,
+                      clubId: widget.clubId,
+                      userId: widget.userId,
+                    )),
           );
         },
       ),
     );
   }
 }
-

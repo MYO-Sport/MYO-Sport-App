@@ -1,26 +1,24 @@
-
 import 'package:flutter/material.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/views/Reservation/ExploredView.dart';
 import 'package:us_rowing/views/Reservation/ReservedView.dart';
 
-
 class EquipmentResView extends StatefulWidget {
-
   final String clubId;
   final String clubName;
   final String userId;
 
-  EquipmentResView({required this.clubId,required this.clubName, required this.userId});
+  EquipmentResView(
+      {required this.clubId, required this.clubName, required this.userId});
 
   @override
   _EquipmentResViewState createState() => _EquipmentResViewState();
 }
 
 class _EquipmentResViewState extends State<EquipmentResView> {
-
   @override
   void initState() {
+    print(widget.userId);
     super.initState();
   }
 
@@ -45,31 +43,37 @@ class _EquipmentResViewState extends State<EquipmentResView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: colorPrimary,
-                        size: 18
-                      ),
-                      onTap: (){
+                      child: Icon(Icons.arrow_back_ios,
+                          color: colorPrimary, size: 18),
+                      onTap: () {
                         Navigator.pop(context);
                       },
                     ),
-                    Text('Equipment Reservation',style: TextStyle(fontSize: 18,color: colorBlack),),
-                    SizedBox(height: 18,width: 18,)
-                  ], ),
+                    Text(
+                      'Equipment Reservation',
+                      style: TextStyle(fontSize: 18, color: colorBlack),
+                    ),
+                    SizedBox(
+                      height: 18,
+                      width: 18,
+                    )
+                  ],
+                ),
               ),
               centerTitle: true,
               bottom: TabBar(
                 unselectedLabelColor: colorGrey,
                 labelColor: colorPrimary,
-                unselectedLabelStyle: TextStyle(color: colorGrey,fontSize: 14),
-                labelStyle: TextStyle(color: colorPrimary,fontSize: 14),
+                unselectedLabelStyle: TextStyle(color: colorGrey, fontSize: 14),
+                labelStyle: TextStyle(color: colorPrimary, fontSize: 14),
                 indicatorColor: colorPrimary,
                 labelPadding: EdgeInsets.zero,
                 indicatorPadding: EdgeInsets.zero,
                 indicatorWeight: 2,
                 indicator: BoxDecoration(
-                  image: DecorationImage(image: AssetImage('assets/images/tab_background.png'),fit: BoxFit.fill),
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/tab_background.png'),
+                      fit: BoxFit.fill),
                 ),
                 tabs: [
                   Tab(
@@ -95,8 +99,13 @@ class _EquipmentResViewState extends State<EquipmentResView> {
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            ExploredView(clubId: widget.clubId,userId: widget.userId,),
-            ReservedView(userId: widget.userId,)
+            ExploredView(
+              clubId: widget.clubId,
+              userId: widget.userId,
+            ),
+            ReservedView(
+              userId: widget.userId,
+            )
           ],
         ),
       ),

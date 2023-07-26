@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:us_rowing/models/ClubModel.dart';
+import 'package:us_rowing/models/club/club_response.dart';
 import 'package:us_rowing/network/ApiClient.dart';
 import 'package:us_rowing/network/response/GeneralResponse.dart';
 import 'package:us_rowing/utils/AppColors.dart';
@@ -9,6 +9,7 @@ import 'package:us_rowing/utils/MySnackBar.dart';
 import 'package:us_rowing/views/AthleteView/Club/Clubs/ClubsDetails.dart';
 import 'package:us_rowing/widgets/AddMenuButton.dart';
 import 'package:http/http.dart' as http;
+
 
 import '../CachedImage.dart';
 
@@ -18,23 +19,27 @@ class ClubWidget extends StatefulWidget {
   final String userId;
   final String clubId;
   final Function onAdd;
-  final ClubModel clubModel;
+  final AllClub clubModel;
 
-  ClubWidget({this.image='',this.name='', required this.userId, required this.clubId,required this.onAdd,required this.clubModel});
+  ClubWidget(
+      {this.image = '',
+      this.name = '',
+      required this.userId,
+      required this.clubId,
+      required this.onAdd,
+      required this.clubModel});
 
   @override
   _ClubWidgetState createState() => _ClubWidgetState();
-
 }
 
-class _ClubWidgetState extends State<ClubWidget>{
-
+class _ClubWidgetState extends State<ClubWidget> {
   bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:EdgeInsets.symmetric(horizontal: 22.0,vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 5),
       child: InkWell(
         child: Material(
           color: colorWhite,
@@ -51,27 +56,44 @@ class _ClubWidgetState extends State<ClubWidget>{
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: colorLightGrey,
-                          borderRadius: BorderRadius.circular(8.0)
-                      ),
-                      child: CachedImage(image: widget.image,radius: 0,fit: BoxFit.fill,padding: 0,
+                          borderRadius: BorderRadius.circular(8.0)),
+                      child: CachedImage(
+                        image: widget.image,
+                        radius: 0,
+                        fit: BoxFit.fill,
+                        padding: 0,
                       )),
-                  Expanded(child: Padding(
+                  Expanded(
+                      child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(widget.name,maxLines: 2,overflow: TextOverflow.fade,textAlign: TextAlign.start,),
+                    child: Text(
+                      widget.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
+                      textAlign: TextAlign.start,
+                    ),
                   )),
-                  AddMenuButton(progress:isLoading, text: 'Add', onPressed: (){
-                    assignClub();
-                  })
+                  AddMenuButton(
+                      progress: isLoading,
+                      text: 'Add',
+                      onPressed: () {
+                        assignClub();
+                      })
                 ],
               ),
             ),
           ),
         ),
-        onTap: (){
+        onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ClubDetails(clubName: widget.name,clubImage: widget.image,clubModel: widget.clubModel,userId: widget.userId,)),
+                builder: (context) => ClubDetails(
+                      clubName: widget.name,
+                      clubImage: widget.image,
+                      clubModel: widget.clubModel,
+                      userId: widget.userId,
+                    )),
           );
         },
       ),
@@ -84,7 +106,8 @@ class _ClubWidgetState extends State<ClubWidget>{
     });
     print('userId' + widget.userId);
     print('clubId' + widget.clubId);
-    String apiUrl = ApiClient.urlAssignClub + widget.userId + '/' + widget.clubId;
+    String apiUrl =
+        ApiClient.urlAssignClub + widget.userId + '/' + widget.clubId;
 
     final response = await http
         .post(
@@ -94,15 +117,15 @@ class _ClubWidgetState extends State<ClubWidget>{
       setState(() {
         isLoading = false;
       });
-      MySnackBar.showSnackBar(context,  'Error: ' + 'Check Your Internet Connection');
+      MySnackBar.showSnackBar(
+          context, 'Error: ' + 'Check Your Internet Connection');
       return value;
-
     });
     print(response.body);
     if (response.statusCode == 200) {
       final String responseString = response.body;
       GeneralResponse mResponse =
-      GeneralResponse.fromJson(json.decode(responseString));
+          GeneralResponse.fromJson(json.decode(responseString));
       if (mResponse.success) {
         widget.onAdd();
       } else {
@@ -112,7 +135,8 @@ class _ClubWidgetState extends State<ClubWidget>{
         MySnackBar.showSnackBar(context, 'Error: ' + mResponse.message);
       }
     } else {
-      MySnackBar.showSnackBar(context,  'Error: ' + 'Check Your Internet Connection');
+      MySnackBar.showSnackBar(
+          context, 'Error: ' + 'Check Your Internet Connection');
     }
   }
 }
