@@ -22,6 +22,10 @@ class ApiClient {
   static final String urlLogin = baseUrl + 'api/user/login';
   static final String urlForgotPassword =
       baseUrl + 'api/user/v1/forgot/password';
+
+//Api for Sending Equipment Feedback
+  static final String sendEquipmentFeedback = '${baseUrl}api/equipmentFeedback';
+
   static final String urlGetClubs = baseUrl + 'api/user/v1/assigned/clubs/';
   static final String urlGetAssignedClub =
       baseUrl + 'api/user/v2/assigned/clubs/';

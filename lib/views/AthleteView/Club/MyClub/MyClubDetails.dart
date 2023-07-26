@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:us_rowing/models/ClubModel.dart';
+import 'package:us_rowing/models/club/club_response.dart';
 import 'package:us_rowing/network/ApiClient.dart';
 import 'package:us_rowing/network/response/ClubRoleResponse.dart';
 import 'package:us_rowing/utils/AppAssets.dart';
@@ -19,7 +19,7 @@ class MyClubDetails extends StatefulWidget {
   final String clubName;
   final String clubImage;
   final String clubId;
-  final ClubModel clubModel;
+  final AllClub clubModel;
   final String userId;
 
   MyClubDetails(

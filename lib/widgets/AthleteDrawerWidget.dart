@@ -15,16 +15,14 @@ import 'package:us_rowing/views/FAQView.dart';
 import 'package:us_rowing/widgets/CachedImage.dart';
 import 'package:us_rowing/widgets/DrawerWidget.dart';
 
+import '../screens/slack_screen.dart';
+
 class AthleteDrawerWidget extends StatefulWidget {
-
-
   @override
   State<StatefulWidget> createState() => _StateAthleteDrawerWidget();
-
 }
 
-class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
-
+class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget> {
   String? userName;
   late String userImage;
   String? userEmail;
@@ -32,11 +30,11 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
   @override
   void initState() {
     super.initState();
-    getUser().then((value){
+    getUser().then((value) {
       setState(() {
-       userName=value.username;
-       userImage=value.profileImage;
-       userEmail=value.email;
+        userName = value.username;
+        userImage = value.profileImage;
+        userEmail = value.email;
       });
     });
   }
@@ -49,8 +47,10 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
         const end = Offset.zero;
         final tween = Tween(begin: begin, end: end);
         final offsetAnimation = animation.drive(tween);
-        return SlideTransition(position: offsetAnimation,
-          child: child, );
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
       },
       duration: const Duration(milliseconds: 800),
       child: Container(
@@ -66,34 +66,61 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  CachedImage(image:userName==null?'':ApiClient.baseUrl+userImage,imageHeight: 60,imageWidth: 60,padding: 0,),
-                  SizedBox(width: 10,),
-                  Expanded(child: Column(
+                  CachedImage(
+                    image:
+                        userName == null ? '' : ApiClient.baseUrl + userImage,
+                    imageHeight: 60,
+                    imageWidth: 60,
+                    padding: 0,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(userName==null?'':userName!,style: TextStyle(color: colorBlack,fontSize: 19),),
-                      SizedBox(height: 5,),
-                      Text(userEmail==null?'':userEmail!,style: TextStyle(color: colorTextSecondary,fontSize: 14),)
+                      Text(
+                        userName == null ? '' : userName!,
+                        style: TextStyle(color: colorBlack, fontSize: 19),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        userEmail == null ? '' : userEmail!,
+                        style:
+                            TextStyle(color: colorTextSecondary, fontSize: 14),
+                      )
                     ],
                   ))
                 ],
               ),
             ),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Divider(thickness: 2,height: 0,),
+              child: Divider(
+                thickness: 2,
+                height: 0,
+              ),
             ),
-            Expanded(child: ListView(
+            Expanded(
+                child: ListView(
               padding: EdgeInsets.zero,
               children: [
                 DrawerWidget(
-                  icon:imgNavProfile,
+                  icon: imgNavProfile,
                   name: 'Profile',
                   onTap: () {
                     // Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CoachProfileView()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CoachProfileView()));
                   },
                 ),
                 DrawerWidget(
@@ -101,7 +128,12 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                   name: 'Chat',
                   onTap: () {
                     // Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CoachChatViewFragment(workoutImage: '',)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CoachChatViewFragment(
+                                  workoutImage: '',
+                                )));
                   },
                 ),
                 DrawerWidget(
@@ -109,7 +141,10 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                   name: 'Live Feeds',
                   onTap: () {
                     // Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => LiveFeedDetails()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LiveFeedDetails()));
                   },
                 ),
                 DrawerWidget(
@@ -117,11 +152,13 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                   name: 'Notifications',
                   onTap: () {
                     // Navigator.pop(context);
-                    Navigator.
-                    push(context, MaterialPageRoute(builder: (context) => NotificationView()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotificationView()));
                   },
                 ),
-               /*  DrawerWidget(
+                /*  DrawerWidget(
                   icon: imgNavSponsors,
                   name: 'Sponsors',
                   onTap: () {
@@ -150,7 +187,10 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                   icon: imgNavEquipment,
                   name: 'Equipment Reservations',
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ClubResView(allClubs: false,)));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ClubResView(
+                              allClubs: false,
+                            )));
                   },
                 ),
                 DrawerWidget(
@@ -159,8 +199,8 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                   onTap: () {
                     // tod
                     // Navigator.pop(context);
-                    Navigator.
-                    push(context, MaterialPageRoute(builder: (context) => FAQView()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => FAQView()));
                   },
                 ),
                 DrawerWidget(
@@ -169,8 +209,18 @@ class _StateAthleteDrawerWidget extends State<AthleteDrawerWidget>{
                   onTap: () {
                     // tod
                     // Navigator.pop(context);
-                    Navigator.
-                    push(context, MaterialPageRoute(builder: (context) => FeedbackView()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FeedbackView()));
+                  },
+                ),
+                DrawerWidget(
+                  icon: imgSlack,
+                  name: 'Slack',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SlackScreen()));
                   },
                 ),
                 /*DrawerWidget(name: 'Saved', icon: IMG_PROFIE_DRAWER, onTap: () {

@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:us_rowing/models/ClubModel.dart';
+import 'package:us_rowing/models/club/assigned_club_response.dart';
+import 'package:us_rowing/models/club/club_response.dart';
 import 'package:us_rowing/network/ApiClient.dart';
-import 'package:us_rowing/network/response/AllClubsResponse.dart';
-import 'package:us_rowing/network/response/AssignedClubsResponse.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/utils/AppUtils.dart';
 import 'package:us_rowing/utils/MySnackBar.dart';
@@ -29,10 +28,10 @@ class _ClubViewState extends State<ClubView> {
   bool gettingAssignedClubs = true;
   bool searching = false;
 
-  List<ClubModel> assignedClubs = [];
-  List<ClubModel> clubs = [];
-  List<ClubModel> showAssignedClubs = [];
-  List<ClubModel> showClubs = [];
+  List<AssignedClub> assignedClubs = [];
+  List<AllClub> clubs = [];
+  List<AssignedClub> showAssignedClubs = [];
+  List<AllClub> showClubs = [];
   late String userId;
 
   bool moreLoadingg = false;
@@ -124,14 +123,14 @@ class _ClubViewState extends State<ClubView> {
                         primary: false,
                         itemCount: showAssignedClubs.length,
                         itemBuilder: (context, index) {
-                          ClubModel club = showAssignedClubs[index];
+                          var club = showAssignedClubs[index];
                           return MyClubWidget(
                             userId: userId,
-                            clubId: club.sId,
+                            clubId: club.id,
                             image:
                                 ApiClient.mediaImgUrl + club.picture.fileName,
                             name: club.clubName,
-                            clubModel: club,
+                            clubModel: allClubFromAssignedClub(club),
                           );
                         },
                       ),
@@ -192,9 +191,9 @@ class _ClubViewState extends State<ClubView> {
                                         return SizedBox();
                                       }
                                     } else {
-                                      ClubModel club = showClubs[index];
+                                      AllClub club = showClubs[index];
                                       return ClubWidget(
-                                        clubId: club.sId,
+                                        clubId: club.id,
                                         userId: userId,
                                         name: club.clubName,
                                         image: ApiClient.mediaImgUrl +
@@ -308,7 +307,7 @@ class _ClubViewState extends State<ClubView> {
         setState(() {
           gettingAssignedClubs = false;
         });
-        MySnackBar.showSnackBar(context, 'Error: ' + mResponse.message);
+        MySnackBar.showSnackBar(context, 'Error: Try Again Later');
       }
     } else {
       MySnackBar.showSnackBar(
@@ -334,28 +333,28 @@ class _ClubViewState extends State<ClubView> {
     });
     print(response.body);
     if (response.statusCode == 200) {
-      final String responseString = response.body;
-      AssignedClubsResponse mResponse =
-          AssignedClubsResponse.fromJson(json.decode(responseString));
-      if (mResponse.status) {
-        setState(() {
-          // showClubs.clear();
-          showAssignedClubs.clear();
-          assignedClubs = mResponse.assignedClubs;
-          // clubs=mResponse.allClubs;
-          showAssignedClubs.addAll(mResponse.assignedClubs);
-          // showClubs.addAll(mResponse.allClubs);
-          gettingAssignedClubs = false;
-        });
-      } else {
+      var data = assignedClubsResponseFromJson(response.body);
+
+      setState(() {
+        // showClubs.clear();
+        showAssignedClubs.clear();
+        assignedClubs = data.assignedClubs;
+        // clubs=mResponse.allClubs;
+        showAssignedClubs.addAll(data.assignedClubs);
+        // showClubs.addAll(mResponse.allClubs);
+        gettingAssignedClubs = false;
+      });
+      /*  } else {
         setState(() {
           gettingAssignedClubs = false;
         });
         MySnackBar.showSnackBar(context, 'Error: ' + mResponse.message);
-      }
+      } */
     } else {
-      MySnackBar.showSnackBar(
-          context, 'Error: ' + 'Check Your Internet Connection');
+      setState(() {
+        gettingAssignedClubs = false;
+      });
+      MySnackBar.showSnackBar(context, 'Error: ' + 'Try Again Later');
     }
   }
 
@@ -379,30 +378,24 @@ class _ClubViewState extends State<ClubView> {
     });
     // print(response.body);
     if (response.statusCode == 200) {
-      final String responseString = response.body;
-      AllClubsResponse mResponse =
-          AllClubsResponse.fromJson(json.decode(responseString));
-      if (mResponse.status) {
-        setState(() {
-          // showClubs.clear();
-          // showAssignedClubs.clear();
-          // assignedClubs=mResponse.assignedClubs;
-          clubs = mResponse.allClubs;
-          // showAssignedClubs.addAll(mResponse.assignedClubs);
-          showClubs.addAll(mResponse.allClubs);
-          moreLoadingg = false;
-          isLoading = false;
-        });
-      } else {
-        setState(() {
-          moreLoadingg = false;
-          isLoading = false;
-        });
-        MySnackBar.showSnackBar(context, 'Error: ' + mResponse.message);
-      }
+      var data = clubsResponseFromJson(response.body);
+
+      setState(() {
+        // showClubs.clear();
+        // showAssignedClubs.clear();
+        // assignedClubs=mResponse.assignedClubs;
+        clubs = data.allClubs;
+        // showAssignedClubs.addAll(mResponse.assignedClubs);
+        showClubs.addAll(data.allClubs);
+        moreLoadingg = false;
+        isLoading = false;
+      });
     } else {
-      MySnackBar.showSnackBar(
-          context, 'Error: ' + 'Check Your Internet Connection ABC');
+      setState(() {
+        moreLoadingg = false;
+        isLoading = false;
+      });
+      MySnackBar.showSnackBar(context, 'Error: Try Again Later');
     }
   }
 
@@ -430,30 +423,24 @@ class _ClubViewState extends State<ClubView> {
     });
     print(response.body);
     if (response.statusCode == 200) {
-      final String responseString = response.body;
-      AllClubsResponse mResponse =
-          AllClubsResponse.fromJson(json.decode(responseString));
-      if (mResponse.status) {
-        setState(() {
-          // showClubs.clear();
-          // showAssignedClubs.clear();
-          // assignedClubs=mResponse.assignedClubs;
-          clubs = mResponse.allClubs;
-          // showAssignedClubs.addAll(mResponse.assignedClubs);
-          showClubs.addAll(mResponse.allClubs);
-          moreLoadingg = false;
-          isLoading = false;
-        });
-      } else {
-        setState(() {
-          moreLoadingg = false;
-          isLoading = false;
-        });
-        MySnackBar.showSnackBar(context, 'Error: ' + mResponse.message);
-      }
+      var data = clubsResponseFromJson(response.body);
+
+      setState(() {
+        // showClubs.clear();
+        // showAssignedClubs.clear();
+        // assignedClubs=mResponse.assignedClubs;
+        clubs = data.allClubs;
+        // showAssignedClubs.addAll(mResponse.assignedClubs);
+        showClubs.addAll(data.allClubs);
+        moreLoadingg = false;
+        isLoading = false;
+      });
     } else {
-      MySnackBar.showSnackBar(
-          context, 'Error: ' + 'Check Your Internet Connection');
+      setState(() {
+        moreLoadingg = false;
+        isLoading = false;
+      });
+      MySnackBar.showSnackBar(context, 'Error: Try Again Later');
     }
   }
 

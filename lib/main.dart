@@ -5,11 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:us_rowing/models/UserModel.dart';
 import 'package:us_rowing/providers/channel_notifier.dart';
 import 'package:us_rowing/providers/channels_video_notifier.dart';
+import 'package:us_rowing/providers/club_providers/club_provider.dart';
 import 'package:us_rowing/providers/slack_notifier.dart';
+import 'package:us_rowing/shared_prefs/shared_prefs.dart';
 import 'package:us_rowing/utils/AppColors.dart';
 import 'package:us_rowing/utils/AppConstants.dart';
 // import 'package:us_rowing/utils/AppConstants.dart';
-import 'package:us_rowing/utils/AppUtils.dart';
 import 'package:us_rowing/views/AthleteView/HomeView.dart';
 import 'package:us_rowing/views/CoachView/CoachHomeView.dart';
 import 'package:us_rowing/views/WelComeView.dart';
@@ -19,13 +20,15 @@ import 'package:us_rowing/views/WelComeView.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefs.init();
   await FlutterDownloader.initialize(debug: true);
-  bool login = await isLogin();
-  UserModel userModel = await getUser();
+  bool login = await SharedPrefs.isLogin();
+  UserModel userModel = await SharedPrefs.getUser();
   String userType = userModel.type;
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
   runApp(MyApp(
     login: login,
     userType: userType,
@@ -57,6 +60,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<ChannelsVideoNotifier>(
           create: (_) => ChannelsVideoNotifier(),
+        ),
+        ChangeNotifierProvider<ClubProvider>(
+          create: (_) => ClubProvider(),
         ),
       ],
       child: MaterialApp(

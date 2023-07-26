@@ -18,6 +18,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:us_rowing/widgets/PrimaryButton.dart';
 import 'package:http/http.dart' as http;
 
+import '../shared_prefs/shared_prefs.dart';
 import 'AthleteView/HomeView.dart';
 
 class LoginView extends StatefulWidget {
@@ -293,8 +294,9 @@ class _LoginViewState extends State<LoginView> {
         UserResponse mResponse =
             UserResponse.fromJson(json.decode(responseString));
         if (mResponse.status) {
-          if (mResponse.verified) {
+          /* if (mResponse.verified) {
             UserModel user = mResponse.response;
+            print("LOGIN USER ID: ");
             saveUser(user).then((value) {
               if (user.type == typeAthlete) {
                 Navigator.pushAndRemoveUntil(
@@ -316,35 +318,36 @@ class _LoginViewState extends State<LoginView> {
                     (route) => false);
               }
             });
-          } else {
+          }  */ /* else {
             setState(() {
               isLoading = false;
-            });
-            UserModel user = mResponse.response;
-            saveUser(user).then((value) {
-              if (user.type == typeAthlete) {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => HomeView(
-                        userModel: user,
-                      ),
+            }); */
+          UserModel user = mResponse.response;
+          print("USER ID LOGIN" + user.sId);
+          SharedPrefs.saveUser(user).then((value) {
+            if (user.type == typeAthlete) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => HomeView(
+                      userModel: user,
                     ),
-                    (route) => false);
-              } else {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => CoachHomeView(
-                        userModel: user,
-                      ),
+                  ),
+                  (route) => false);
+            } else {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => CoachHomeView(
+                      userModel: user,
                     ),
-                    (route) => false);
-              }
-            });
-            /* showToast('Please Verify Your Account');
+                  ),
+                  (route) => false);
+            }
+          });
+          /* showToast('Please Verify Your Account');
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmailVerification( email: loginBody.email))); */
-          }
+          // }
         } else {
           setState(() {
             isLoading = false;

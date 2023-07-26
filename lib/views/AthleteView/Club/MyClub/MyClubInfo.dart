@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:us_rowing/models/ClubModel.dart';
 import 'package:us_rowing/models/TeamModel.dart';
+import 'package:us_rowing/models/club/club_response.dart';
 import 'package:us_rowing/network/ApiClient.dart';
 import 'package:us_rowing/network/response/ClubTeamsResponse.dart';
 import 'package:us_rowing/utils/AppAssets.dart';
@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 
 class MyClubInfo extends StatefulWidget {
   final String clubImage;
-  final ClubModel clubModel;
+  final AllClub clubModel;
   final String userId;
 
   MyClubInfo(
@@ -108,7 +108,7 @@ class _MyClubInfoState extends State<MyClubInfo> {
                               height: 5.0,
                             ),
                             Text(
-                              widget.clubModel.about,
+                              widget.clubModel.about!,
                               style:
                                   TextStyle(fontSize: 11.0, color: colorBlack),
                             ),
@@ -205,7 +205,7 @@ class _MyClubInfoState extends State<MyClubInfo> {
                                 ),
                                 SizedBox(width: 30.0),
                                 Text(
-                                  widget.clubModel.cell,
+                                  widget.clubModel.cell!,
                                   style: TextStyle(
                                       fontSize: 11.0, color: colorBlack),
                                 ),
@@ -273,7 +273,7 @@ class _MyClubInfoState extends State<MyClubInfo> {
                               height: 10.0,
                             ),
                             Text(
-                              widget.clubModel.location,
+                              widget.clubModel.location.toString(),
                               style:
                                   TextStyle(fontSize: 11.0, color: colorBlack),
                             ),
@@ -347,12 +347,12 @@ class _MyClubInfoState extends State<MyClubInfo> {
   }
 
   getTeams() async {
-    print('clubId' + widget.clubModel.sId);
+    print('clubId' + widget.clubModel.id);
     String apiUrl = ApiClient.urlAllTeamsOfClubs;
 
     final response = await http.post(Uri.parse(apiUrl), body: {
       'user_id': widget.userId,
-      'club_id': widget.clubModel.sId,
+      'club_id': widget.clubModel.id,
     }).catchError((value) {
       setState(() {
         isLoading = false;

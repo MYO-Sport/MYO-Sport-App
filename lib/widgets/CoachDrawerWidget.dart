@@ -233,7 +233,7 @@ class _StateCoachDrawerWidget extends State<CoachDrawerWidget> {
                   },
                 ),
                 DrawerWidget(
-                  icon: imgNavStore,
+                  icon: imgSlack,
                   name: 'Slack',
                   onTap: () {
                     Navigator.push(context,

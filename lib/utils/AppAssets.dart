@@ -1,4 +1,3 @@
-
 //Navigation Icons
 const String imgNavChallenges = "assets/images/navigation/nav_challenges.png";
 const String imgNavChat = "assets/images/navigation/nav_chat.png";
@@ -7,21 +6,25 @@ const String imgNavFAQ = "assets/images/navigation/nav_faq.png";
 const String imgNavFeedBack = "assets/images/navigation/nav_feedback.png";
 const String imgNavLive = "assets/images/navigation/nav_live.png";
 const String imgNavLogout = "assets/images/navigation/nav_logout.png";
-const String imgNavNotification = "assets/images/navigation/nav_notifications.png";
+const String imgNavNotification =
+    "assets/images/navigation/nav_notifications.png";
 const String imgNavProfile = "assets/images/navigation/nav_profile.png";
 const String imgNavSetting = "assets/images/navigation/nav_setting.png";
 const String imgNavSponsors = "assets/images/navigation/nav_sponsors.png";
 const String imgNavStore = "assets/images/navigation/nav_store.png";
+const String imgSlack = "assets/images/slack.png";
 
 //MYoSport Icons
 const String imgSaved = "assets/images/saved.png";
+const String imgDoc = "assets/images/docs.png";
+const String imgPDF = "assets/images/pdf.png";
 const String imgComplete = "assets/images/complete.png";
 
 //Strava Logo
 const String imgStrava = "assets/images/strava_icon.png";
 
 //Welcome Screen Images
-const List<String> welcomeImage=[
+const List<String> welcomeImage = [
   'assets/images/welcome/welcome_1.png',
   'assets/images/welcome/welcome_2.png',
   'assets/images/welcome/welcome_3.png',
@@ -29,7 +32,6 @@ const List<String> welcomeImage=[
   'assets/images/welcome/welcome_5.png',
   'assets/images/welcome/welcome_6.png',
 ];
-
 
 // sign up screen images
 const String IMG_MAIN = "assets/images/Without-Text/bg.png";
@@ -72,7 +74,8 @@ const String IMG_ARROW = 'assets/images/hambergView/ARROW.png';
 const String IMG_CHAT = 'assets/images/hambergView/CHAT-ICON.png';
 const String IMG_FAQ = 'assets/images/hambergView/fAQ.png';
 const String IMG_LOGOUT_DRAWER = 'assets/images/hambergView/LOGOUT.png';
-const String IMG_NOTIFICATION_DRAWER = 'assets/images/hambergView/NOTIFICATION-ICON.png';
+const String IMG_NOTIFICATION_DRAWER =
+    'assets/images/hambergView/NOTIFICATION-ICON.png';
 const String IMG_LIBRARY = 'assets/images/top-bar-library-icon.png';
 const String IMG_PROFIE_DRAWER = 'assets/images/hambergView/PROFILE-ICON.png';
 const String IMG_LIVE = 'assets/images/hambergView/live-icon.png';
@@ -100,7 +103,7 @@ const String IMG_FEED_LIVE = 'assets/images/feedView/live-icon.png';
 //PlaceHolder Images
 const String IMG_PLACEHOLDER = 'assets/images/placeholder.jpg';
 const String WORKOUT_PLACEHOLDER = 'assets/images/workout_placeholder.png';
-const String IMG_POST_PLACEHOLDER= 'assets/images/post_placeholder.jpg';
+const String IMG_POST_PLACEHOLDER = 'assets/images/post_placeholder.jpg';
 
 // list names of team members
 const List usMembers = [
@@ -167,11 +170,4 @@ const List usMemberImages = [
   'Mike Zimmer'
 ];
 
-const List<String> repeat = [
-  'Everyday',
-  'Custom',
-  'Working Days',
-  'Weekends'
-];
-
-
+const List<String> repeat = ['Everyday', 'Custom', 'Working Days', 'Weekends'];

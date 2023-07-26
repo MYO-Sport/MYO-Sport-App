@@ -1,19 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import 'package:us_rowing/models/slack/slack_users_model.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher_string.dart';
+// import 'package:us_rowing/models/slack/slack_users_model.dart';
 
 class SlackNotifier extends ChangeNotifier {
+  int progress = 0;
+
+  WebViewController controller = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setBackgroundColor(const Color(0x00000000))
+    ..setUserAgent(
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.3")
+    ..setNavigationDelegate(
+      NavigationDelegate(
+        onProgress: (int progress) {
+          progress = progress;
+        },
+        onPageStarted: (String url) {},
+        onPageFinished: (String url) {},
+        onWebResourceError: (WebResourceError error) {},
+        onNavigationRequest: (NavigationRequest request) {
+          if (request.url.startsWith('https://flutter.dev')) {
+            return NavigationDecision.prevent;
+          }
+          return NavigationDecision.navigate;
+        },
+      ),
+    )
+    ..loadRequest(
+        Uri.parse('https://slack.com/intl/en-in/get-started#/createnew'));
+
+  int get getProgress => progress;
 /*   List<SlackMessagesModel> _messagesList = [];
   // List<Member> _usersList = [];
   List<SlackMessagesModel> get messageList => _messagesList; */
 
-  var loading = false;
-  var checkEmail = false;
+  // var loading = false;
+  // var checkEmail = false;
 
-  Future<List<Member>?> fetchUsersList() async {
+  /* Future<List<Member>?> fetchUsersList() async {
     const String slackToken =
         'xoxp-5444083524757-5447059404530-5488219679908-0ed11ae477ff4c3760f725a7c2d6537f';
     // const String slackToken =
@@ -109,5 +137,5 @@ class SlackNotifier extends ChangeNotifier {
         throw 'Could not launch $playStoreUrl';
       }
     }
-  } */
+  } */ */
 }

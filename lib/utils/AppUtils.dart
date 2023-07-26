@@ -99,6 +99,7 @@ Future<UserModel> getUser() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   userModel.username = prefs.getString(kUserName) ?? '';
   userModel.memberNumber = prefs.getString(kUserMembership) ?? '';
+
   userModel.sId = prefs.getString(kUserId) ?? '';
   userModel.type = prefs.getString(kType) ?? '';
   userModel.contactNum = prefs.getString(kPhone) ?? '';
